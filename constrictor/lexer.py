@@ -8,9 +8,18 @@ from constrictor.grammar import *
 
 # token: simple object with a type and value
 class Token:
-  def __init__(self, type_, value=None):
+  def __init__(self, type_, value=None, pos_start=None, pos_end=None):
     self.type = type_
     self.value = value
+
+    if pos_start:
+      self.pos_start = pos_start.copy()
+      self.pos_end = pos_start.copy()
+      self.pos_end.advance()
+
+    if pos_end:
+      self.pos_end = pos_end
+
 
   def __repr__(self):
     # print type and value if token has a value
@@ -46,22 +55,22 @@ class Lexer:
         self.advance()
       # add operators
       elif self.current_char == "+":
-        tokens.append(Token(PLUS))
+        tokens.append(Token(PLUS, pos_start=self.pos))
         self.advance()
       elif self.current_char == "-":
-        tokens.append(Token(MINUS))
+        tokens.append(Token(MINUS, pos_start=self.pos))
         self.advance()
       elif self.current_char == "*":
-        tokens.append(Token(MUL))
+        tokens.append(Token(MUL, pos_start=self.pos))
         self.advance()
       elif self.current_char == "/":
-        tokens.append(Token(DIV))
+        tokens.append(Token(DIV, pos_start=self.pos))
         self.advance()
       elif self.current_char == "(":
-        tokens.append(Token(LPAREN))
+        tokens.append(Token(LPAREN, pos_start=self.pos))
         self.advance()
       elif self.current_char == ")":
-        tokens.append(Token(RPAREN))
+        tokens.append(Token(RPAREN, pos_start=self.pos))
         self.advance()
       # if char type illegal, return empty list and error
       else:
@@ -70,12 +79,14 @@ class Lexer:
         self.advance()
         return [], IllegalCharError(pos_start, self.pos, f"'{char}'")
     
+    tokens.append(Token(EOF, pos_start=self.pos))
     return tokens, None
 
   # turn string input into number
   def make_number(self):
     num_str = ""
     dot_count = 0
+    pos_start = self.pos.copy()
 
     while self.current_char != None and self.current_char in DIGITS + ".":
       if self.current_char == ".":
@@ -88,6 +99,6 @@ class Lexer:
     
     # turn number into integer or float
     if dot_count == 0:
-      return Token(INT, int(num_str))
+      return Token(INT, int(num_str), pos_start, self.pos)
     else:
-      return Token(FLOAT, float(num_str))
+      return Token(FLOAT, float(num_str), pos_start, self.pos)

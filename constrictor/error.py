@@ -1,3 +1,7 @@
+from constrictor.helpers import string_with_arrows
+
+
+
 class Error:
   def __init__(self, pos_start, pos_end, error_name, details):
     self.pos_start = pos_start
@@ -6,13 +10,21 @@ class Error:
     self.details = details
   
   def as_string(self):
-    result = f"{self.error_name}: {self.details} \nFile {self.pos_start.file_name}, line {self.pos_start.row + 1}"
+    result = f"{self.error_name}: {self.details}"
+    result += f"\nFile {self.pos_start.file_name}, line {self.pos_start.row + 1}"
+    result += f"\n\n {string_with_arrows(self.pos_start.file_txt, self.pos_start, self.pos_end)}"
+    
     return result
 
 
 class IllegalCharError(Error):
   def __init__(self, pos_start, pos_end, details):
     super().__init__(pos_start, pos_end, "Illegal Character", details)
+
+
+class InvalidSyntaxError(Error):
+  def __init__(self, pos_start, pos_end, details=""):
+    super().__init__(pos_start, pos_end, "Invalid Syntax", details)
 
 
 # class to keep track of error position
@@ -25,7 +37,7 @@ class Position:
     self.file_txt = file_txt
 
   # move to next index and update row and col number
-  def advance(self, current_char):
+  def advance(self, current_char=None):
     self.idx += 1
     self.col += 1
 
@@ -39,3 +51,4 @@ class Position:
   # return copy of the position to keep track of start of error
   def copy(self):
     return Position(self.idx, self.row, self.col, self.file_name, self.file_txt)
+
