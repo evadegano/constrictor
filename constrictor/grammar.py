@@ -1,0 +1,14 @@
+"""
+  GRAMMAR: token types
+"""
+
+INT = 'INT'
+FLOAT = "FLOAT"
+PLUS = "PLUS"
+MINUS = "MINUS"
+MUL = "MUL"
+DIV = "DIV"
+LPAREN = "LPAREN"
+RPAREN = "RPAREN"
+
+DIGITS = "0123456789"

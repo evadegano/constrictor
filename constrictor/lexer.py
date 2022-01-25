@@ -1,19 +1,8 @@
-from constrictor.error import IllegalCharError, Position
-
 """
   LEXER: traverse input character by character and breaks them into tokens
 """
-
-INT = 'INT'
-FLOAT = "FLOAT"
-PLUS = "PLUS"
-MINUS = "MINUS"
-MUL = "MUL"
-DIV = "DIV"
-LPAREN = "LPAREN"
-RPAREN = "RPAREN"
-
-DIGITS = "0123456789"
+from constrictor.error import IllegalCharError, Position
+from constrictor.grammar import *
 
 
 
@@ -102,11 +91,3 @@ class Lexer:
       return Token(INT, int(num_str))
     else:
       return Token(FLOAT, float(num_str))
-
-
-
-def run(file_name, text):
-  lexer = Lexer(file_name, text)
-  tokens, error = lexer.make_tokens()
-
-  return tokens, error

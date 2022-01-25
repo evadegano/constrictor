@@ -1,8 +1,8 @@
-import constrictor.lexer as lexer
+import constrictor.parser as parser
 
 while True:
   text = input("Constrictor > ")
-  result, error = lexer.run("<stdin>", text)
+  result, error = parser.run("<stdin>", text)
 
   if error: print(error.as_string())
   else: print(result)
