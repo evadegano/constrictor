@@ -9,7 +9,7 @@ A basic typed programming language that builds on Python 3.
 * [Sources](#sources)
 
 ## Scope
-I did that project during my Full Stack Developer bootcamp to understand how programming languages and interpreters are built.
+This language was developed as a personal project to understand how programming languages and interpreters are built.
 
 ## Technologies
 This project is built with:
