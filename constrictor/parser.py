@@ -2,7 +2,6 @@
   PARSER: organize tokens into AST (abstract syntax tree)
 """
 from ast import Expression
-from constrictor.lexer import Lexer
 from constrictor.error import InvalidSyntaxError
 from constrictor.grammar import *
 
@@ -39,6 +38,9 @@ class ParseResult():
 class NumberNode:
   def __init__(self, token):
     self.token = token
+
+    self.pos_start = self.token.pos_start
+    self.pos_end = self.token.pos_end
   
   def __repr__(self):
     return f"{self.token}"
@@ -51,6 +53,9 @@ class BinOpNode:
     self.operator = operator
     self.right_node = right_node
 
+    self.pos_start = self.left_node.pos_start
+    self.pos_end = self.right_node.pos_end
+
   def __repr__(self):
     return f"({self.left_node}, {self.operator}, {self.right_node})"
 
@@ -59,6 +64,9 @@ class UnaryOpNode:
   def __init__(self, operator, node):
     self.operator = operator
     self.node = node
+
+    self.pos_start = self.operator.pos_start
+    self.pos_end = self.node.pos_end
 
   def __repr__(self):
     return f"({self.operator}, {self.node})"
@@ -167,15 +175,3 @@ class Parser:
 
 
 
-def run(file_name, text):
-  # generate tokens
-  lexer = Lexer(file_name, text)
-  tokens, error = lexer.make_tokens()
-
-  if error: return None, error
-
-  # generate AST
-  parser = Parser(tokens)
-  ast = parser.parse()
-
-  return ast.node, ast.error
