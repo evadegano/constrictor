@@ -1,15 +1,15 @@
 # Constrictor
+A basic typed programming language that builds on Python 3.
+
 ## Table of contents
-* [General info](#general-info)
+* [Scope](#scope)
 * [Technologies](#technologies)
 * [Features](#features)
 * [Setup](#setup)
 * [Sources](#sources)
 
-## General Info
-A basic typed programming language that builds on Python 3.
-
-I did that project during my Full Stack Developer bootcamp to understand how programming languages and interpreters are built.
+## Scope
+This language was developed as a personal project to understand how programming languages and interpreters are built.
 
 ## Technologies
 This project is built with:
@@ -30,4 +30,5 @@ Coming soon...
 
 ## Sources
 This project was done following CodePulse's tutorial on Youtube.
+
 Available at: https://www.youtube.com/watch?v=Eythq9848Fg&list=PLZQftyCk7_SdoVexSmwy_tBgs7P0b97yD&index=2
